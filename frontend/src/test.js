@@ -9,7 +9,7 @@ export function postTest(element){
             }
         )
         .then((Response) => {
-            console.log(Response.data.url)
+            console.log(Response.data)
         })
     })
 }

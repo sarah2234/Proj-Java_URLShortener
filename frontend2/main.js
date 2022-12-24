@@ -1,12 +1,21 @@
-import { postTest } from "./test"
+import axios from "axios";
 
-document.querySelector('#app').innerHTML = `
-  <div class="content">
-  <h1 class="title">URL Shortener</h1>
-  <form method="post" class="input">
-    <input id="urlValue" type="text" placeholder="input URL"></input>
-    <input id="postBtn" type="button" value="Submit URL"></input>
-  </form>
-  </div>
-`
-postTest(document.querySelector("#postBtn"))
+window.onload = function() {
+  let button = document.querySelector('#postBtn')
+  button.addEventListener('click', () => {
+    axios.post(
+      'http://localhost:8000/url',
+      {
+          "target_url":document.querySelector("#urlValue").value
+      }
+  )
+  .then((Response) => {
+      console.log(Response.data.url)
+      let shortenedURL = document.querySelector('.shortenedURL')
+      let result = document.querySelector('.result').querySelector('p')
+      result.innerHTML="Shortened URL:"
+      shortenedURL.innerHTML=Response.data.url
+      shortenedURL.setAttribute('href', Response.data.url)
+    })
+  })
+}
